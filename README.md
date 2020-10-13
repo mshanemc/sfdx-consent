@@ -56,5 +56,5 @@ EXAMPLE
   sfdx consent:export -p SomePortabilityPolicy -i 0PK0t000000heLTGAY
 ```
 
-_See code: [src/commands/consent/export.ts](https://github.com/mshanemc/sfdx-consent/blob/v1.2.0/src/commands/consent/export.ts)_
+_See code: [src/commands/consent/export.ts](https://github.com/mshanemc/sfdx-consent/blob/v1.3.0/src/commands/consent/export.ts)_
 <!-- commandsstop -->
