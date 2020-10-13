@@ -1,7 +1,8 @@
 {
     "author": "mshanemc <shane.mclaughlin@salesforce.com>",
-    "bugs": "https://github.com/mshanemc/sfdx-sosl/issues",
+    "bugs": "https://github.com/mshanemc/sfdx-consent/issues",
     "dependencies": {
+        "@lifeomic/attempt": "^3.0.0",
         "@salesforce/command": "^3.0.3",
         "chalk": "^4.1.0"
     },
@@ -40,7 +41,7 @@
         "/lib",
         "/messages"
     ],
-    "homepage": "https://github.com/mshanemc/sfdx-sosl",
+    "homepage": "https://github.com/mshanemc/sfdx-consent",
     "husky": {
         "hooks": {
             "pre-commit": "lint-staged"
@@ -53,7 +54,7 @@
             "git add"
         ]
     },
-    "name": "@mshanemc/sfdx-sosl",
+    "name": "@mshanemc/sfdx-consent",
     "oclif": {
         "bin": "sfdx",
         "commands": "./lib/commands",
@@ -61,7 +62,7 @@
             "@oclif/plugin-help"
         ]
     },
-    "repository": "mshanemc/sfdx-sosl",
+    "repository": "mshanemc/sfdx-consent",
     "scripts": {
         "build": "rimraf lib && tsc",
         "clean": "rimraf .oclif.manifest.json",
