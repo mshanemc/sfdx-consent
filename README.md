@@ -1,25 +1,26 @@
-# `sfdx-sosl`
+# `sfdx-consent`
 
-[![npm version](https://badge.fury.io/js/%40mshanemc%2Fsfdx-sosl.svg)](https://badge.fury.io/js/%40mshanemc%2Fsfdx-sosl)
+[![npm version](https://badge.fury.io/js/%40mshanemc%2Fsfdx-consent.svg)](https://badge.fury.io/js/%40mshanemc%2Fsfdx-consent)
 
-SOSL via CLI plugin
+Wrappers for the consent API, including data portability requests
 
 # Usage
 
 Install like this:
 
-`sfdx plugins:install @mshanemc/sfdx-sosl`
+`sfdx plugins:install @mshanemc/sfdx-consent`
 
 Command inventory:
 
 ```
-$ sfdx sosl --help
+$ sfdx consent --help
 ```
 
 # Commands
 
 <!-- commands -->
-* [`sfdx consent:export -p <string> -i <id> [-u <string>] [--apiversion <string>] [--verbose] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-consentexport--p-string--i-id--u-string---apiversion-string---verbose---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+
+-   [`sfdx consent:export -p <string> -i <id> [-u <string>] [--apiversion <string>] [--verbose] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-consentexport--p-string--i-id--u-string---apiversion-string---verbose---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
 ## `sfdx consent:export -p <string> -i <id> [-u <string>] [--apiversion <string>] [--verbose] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -27,7 +28,7 @@ export data using a portability policy
 
 ```
 USAGE
-  $ sfdx consent:export -p <string> -i <id> [-u <string>] [--apiversion <string>] [--verbose] [--json] [--loglevel 
+  $ sfdx consent:export -p <string> -i <id> [-u <string>] [--apiversion <string>] [--verbose] [--json] [--loglevel
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
@@ -57,4 +58,5 @@ EXAMPLE
 ```
 
 _See code: [src/commands/consent/export.ts](https://github.com/mshanemc/sfdx-consent/blob/v1.3.0/src/commands/consent/export.ts)_
+
 <!-- commandsstop -->
