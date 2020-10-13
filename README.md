@@ -19,20 +19,24 @@ $ sfdx sosl --help
 # Commands
 
 <!-- commands -->
+* [`sfdx consent:export -p <string> -i <id> [-u <string>] [--apiversion <string>] [--verbose] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-consentexport--p-string--i-id--u-string---apiversion-string---verbose---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
--   [`sfdx data:sosl:query -q <string> [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-datasoslquery--q-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+## `sfdx consent:export -p <string> -i <id> [-u <string>] [--apiversion <string>] [--verbose] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
-## `sfdx data:sosl:query -q <string> [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
-
-Runs a sosl query. SOSL Reference: https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_sosl_syntax.htm
+export data using a portability policy
 
 ```
 USAGE
-  $ sfdx data:sosl:query -q <string> [-u <string>] [--apiversion <string>] [--json] [--loglevel
+  $ sfdx consent:export -p <string> -i <id> [-u <string>] [--apiversion <string>] [--verbose] [--json] [--loglevel 
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -q, --query=query                                                                 (required) SOSL query
+  -i, --recordid=recordid                                                           (required) record ID for a
+                                                                                    User/Lead/Contact/PersonAccount/Indi
+                                                                                    vidual
+
+  -p, --policy=policy                                                               (required) API name of a portability
+                                                                                    policy
 
   -u, --targetusername=targetusername                                               username or alias for the target
                                                                                     org; overrides default target org
@@ -45,22 +49,12 @@ OPTIONS
   --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
                                                                                     this command invocation
 
-ALIASES
-  $ sfdx shane:data:sosl:query
-  $ sfdx force:data:sosl:query
-  $ sfdx shane:data:search
-  $ sfdx force:data:search
-  $ sfdx force:data:sosl
-  $ sfdx shane:data:sosl
+  --verbose                                                                         emit additional command output to
+                                                                                    stdout
 
-EXAMPLES
-  sfdx force:data:sosl:query -q "find {something}"
-
-  sfdx force:data:sosl:query -q "find {Jack} returning User(Name), Account(Name),Contact(FirstName,LastName,Department)"
-  -u platformers
-  // search across several objects with different results fields on a specified org
+EXAMPLE
+  sfdx consent:export -p SomePortabilityPolicy -i 0PK0t000000heLTGAY
 ```
 
-_See code: [src/commands/data/sosl/query.ts](https://github.com/mshanemc/sfdx-sosl/blob/v1.1.0/src/commands/data/sosl/query.ts)_
-
+_See code: [src/commands/consent/export.ts](https://github.com/mshanemc/sfdx-consent/blob/v1.2.0/src/commands/consent/export.ts)_
 <!-- commandsstop -->
