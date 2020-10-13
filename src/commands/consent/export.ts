@@ -4,13 +4,7 @@ import { retry } from '@lifeomic/attempt';
 export default class DataExport extends SfdxCommand {
     public static description = `export data using a portability policy`;
 
-    public static examples = [
-        `sfdx consent:export -p SomeConsentPolicy -i customerID"
-        `,
-        `sfdx force:data:sosl:query -q "find {Jack} returning User(Name), Account(Name),Contact(FirstName,LastName,Department)" -u platformers
-// search across several objects with different results fields on a specified org
-`
-    ];
+    public static examples = [`sfdx consent:export -p SomePortabilityPolicy -i 0PK0t000000heLTGAY`];
 
     protected static flagsConfig = {
         policy: flags.string({
@@ -31,7 +25,7 @@ export default class DataExport extends SfdxCommand {
     public async run(): Promise<any> {
         const conn = this.org.getConnection();
         const url = `${conn.baseUrl()}/consent/dsr/rtp/execute`.replace('.com//', '.com/');
-        this.ux.startSpinner('Request the portability file be generated');
+        this.ux.startSpinner('Requesting the portability file be generated');
         const createResult = (await conn.request({
             url,
             method: 'POST',
@@ -40,15 +34,28 @@ export default class DataExport extends SfdxCommand {
                 policyName: this.flags.policy
             })
         })) as any;
+        if (createResult.status !== 'SUCCESS') {
+            this.ux.stopSpinner();
+            throw new Error(createResult.errorMessage);
+        }
         if (!this.flags.json && this.flags.verbose) {
             this.ux.logJson(createResult);
         }
         this.ux.setSpinnerStatus('Waiting for file to be ready');
-        const fileUrl = (await retry(
+        const statusResponseFinal = (await retry(
             async () => {
                 const statusResponse = (await conn.request(`${url}?policyFileId=${createResult.result.policyFileId}`)) as any;
+                if (!this.flags.json && this.flags.verbose) {
+                    this.ux.logJson(statusResponse);
+                }
                 if (statusResponse.result.policyFileStatus === 'Complete') {
-                    return statusResponse.result.policyFileUrl;
+                    this.ux.stopSpinner(`file is ready at ${statusResponse.result.policyFileUrl}`);
+                    return statusResponse;
+                }
+                if (statusResponse.result.policyFileStatus === 'Failed') {
+                    this.ux.stopSpinner('Error generating file');
+                    this.ux.error(statusResponse);
+                    return statusResponse;
                 }
                 throw new Error('not ready yet.  retry.');
             },
@@ -58,11 +65,6 @@ export default class DataExport extends SfdxCommand {
                 factor: 2
             }
         )) as any;
-        this.ux.stopSpinner(`file is ready at ${fileUrl}`);
-
-        return {
-            policyFileUrl: fileUrl,
-            policyFileId: createResult.result.policyFileId
-        };
+        return statusResponseFinal;
     }
 }
